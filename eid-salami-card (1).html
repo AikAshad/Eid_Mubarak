@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eid Mubarak 🌙 — Salami Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#f0c040;--gold-l:#ffe082;--gold-d:#b8860b;
+  --bg:#071a0e;--white:#fffdf5;
+  --glow:rgba(240,192,64,.45);
+  --glass:rgba(255,253,245,.055);--glass-b:rgba(240,192,64,.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+/* ── BG ── */
+.bg-base{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 25% 20%,#0d3b1f 0%,#071a0e 55%,#030d07 100%)}
+.mosque{position:fixed;bottom:0;left:0;right:0;z-index:1;height:200px;opacity:.10;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200'%3E%3Cpath fill='%23f0c040' d='M0,200L0,150L50,150L50,95L80,75L80,55Q80,35 100,35Q120,35 120,55L120,75L150,95L150,150L200,150L200,200 M260,200L260,125L280,115L280,75Q280,46 308,46Q336,46 336,75L336,115L356,125L356,200 M410,200L410,95L432,73L455,50L478,28Q498,8 520,8Q542,8 562,28L585,50L608,73L630,95L630,200 M670,200L670,125L690,115L690,75Q690,46 718,46Q746,46 746,75L746,115L766,125L766,200 M820,200L820,150L870,150L870,95L900,75L900,55Q900,35 920,35Q940,35 940,55L940,75L970,95L970,150L1020,150L1020,200 M1060,200L1060,125L1080,115L1080,75Q1080,46 1108,46Q1136,46 1136,75L1136,115L1156,125L1156,200Z'/%3E%3C/svg%3E") no-repeat bottom center/cover}
+#starCanvas{position:fixed;inset:0;z-index:2;pointer-events:none}
+.float-layer{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+#confettiCanvas{position:fixed;inset:0;z-index:900;pointer-events:none}
+.glow-burst{position:fixed;inset:0;z-index:899;pointer-events:none;background:radial-gradient(ellipse at center,rgba(240,192,64,.22) 0%,transparent 65%);opacity:0}
+.glow-burst.flash{animation:burstA .7s ease forwards}
+@keyframes burstA{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+
+/* ── LANTERNS ── */
+.lanterns{position:fixed;top:0;left:0;right:0;z-index:4;display:flex;justify-content:space-around;pointer-events:none}
+.lantern{display:flex;flex-direction:column;align-items:center;animation:swing ease-in-out infinite alternate;transform-origin:top center}
+.lantern:nth-child(1){animation-duration:3.2s;animation-delay:0s}
+.lantern:nth-child(2){animation-duration:2.9s;animation-delay:.4s}
+.lantern:nth-child(3){animation-duration:3.6s;animation-delay:.9s}
+.lantern:nth-child(4){animation-duration:2.7s;animation-delay:.2s}
+.lantern:nth-child(5){animation-duration:3.1s;animation-delay:.7s}
+@keyframes swing{from{transform:rotate(-11deg)}to{transform:rotate(11deg)}}
+.ls{width:2px;height:55px;background:linear-gradient(to bottom,rgba(240,192,64,.4),rgba(240,192,64,.07))}
+.lb{width:26px;height:42px;border-radius:5px 5px 10px 10px;position:relative}
+.lb::before,.lb::after{content:'';position:absolute;left:50%;transform:translateX(-50%);background:rgba(240,192,64,.42);border-radius:2px}
+.lb::before{top:-4px;width:16px;height:5px}
+.lb::after{bottom:-4px;width:16px;height:5px}
+.lg{width:18px;height:9px;background:radial-gradient(ellipse,rgba(255,150,50,.5),transparent);margin-top:2px}
+
+/* ── FLOATING WORDS ── */
+.fw{position:absolute;font-family:'Amiri',serif;color:rgba(240,192,64,.10);white-space:nowrap;animation:floatUp linear infinite;opacity:0;pointer-events:none}
+@keyframes floatUp{0%{transform:translateY(0) rotate(-4deg);opacity:0}8%{opacity:1}90%{opacity:.45}100%{transform:translateY(-115vh) rotate(4deg);opacity:0}}
+
+/* ── APP ── */
+#app{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:110px 18px 70px}
+
+/* ── MOON ── */
+.moon-wrap{position:relative;margin-bottom:4px;animation:moonFloat 4.5s ease-in-out infinite}
+@keyframes moonFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.moon-em{font-size:clamp(64px,13vw,106px);display:block;text-align:center;filter:drop-shadow(0 0 22px #f0c040) drop-shadow(0 0 55px rgba(240,192,64,.32))}
+.mring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgba(240,192,64,.17);animation:ringP 3.2s ease-in-out infinite}
+.mring.r1{width:140px;height:140px}.mring.r2{width:185px;height:185px;animation-delay:1.2s;border-color:rgba(240,192,64,.08)}
+@keyframes ringP{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}50%{transform:translate(-50%,-50%) scale(1.11);opacity:1}}
+
+/* ── CARD ── */
+.card{background:var(--glass);border:1px solid var(--glass-b);border-radius:26px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);padding:clamp(26px,5vw,52px) clamp(22px,6vw,60px);max-width:580px;width:100%;box-shadow:0 0 70px rgba(240,192,64,.07),0 22px 90px rgba(0,0,0,.55);text-align:center;position:relative}
+.card.shake{animation:cardShake .5s cubic-bezier(.36,.07,.19,.97) both}
+@keyframes cardShake{0%,100%{transform:rotate(0)}15%{transform:rotate(-4deg) scale(1.02)}30%{transform:rotate(4deg) scale(1.05)}45%{transform:rotate(-3deg) scale(1.06)}60%{transform:rotate(3deg) scale(1.04)}75%{transform:rotate(-1.5deg) scale(1.02)}}
+
+/* ── EID TITLE ── */
+.eid-title{font-family:'Scheherazade New',serif;font-size:clamp(40px,9vw,76px);font-weight:700;color:var(--gold);text-shadow:0 0 24px var(--glow),0 0 65px rgba(240,192,64,.22);letter-spacing:2px;line-height:1.1;margin-bottom:6px}
+.eid-ar{font-family:'Amiri',serif;font-size:clamp(16px,3.2vw,26px);color:var(--gold-l);opacity:.75;margin-bottom:18px;letter-spacing:3px}
+
+/* ── NAME INPUT ── */
+.name-wrap{margin:14px 0}
+.name-in{width:100%;background:rgba(255,255,255,.04);border:1.5px solid var(--glass-b);border-radius:50px;padding:13px 22px;color:var(--white);font-family:'Poppins',sans-serif;font-size:15px;outline:none;text-align:center;transition:all .3s;letter-spacing:.4px}
+.name-in::placeholder{color:rgba(240,192,64,.38)}
+.name-in:focus{border-color:var(--gold);background:rgba(240,192,64,.05);box-shadow:0 0 22px rgba(240,192,64,.13)}
+
+/* ── GREETING ── */
+.greeting{font-size:clamp(13px,2.3vw,16px);color:rgba(255,253,245,.82);line-height:1.65;margin:14px 0 0;padding:14px 18px;background:rgba(240,192,64,.04);border-radius:14px;border:1px solid rgba(240,192,64,.09);min-height:66px;font-style:italic}
+.greeting .hi{color:var(--gold);font-weight:600;font-style:normal}
+
+/* ── COUNTER (above btn) ── */
+.ctr{margin:15px 0 4px;font-size:12px;color:rgba(240,192,64,.52);letter-spacing:.8px}
+.ctr strong{color:var(--gold-l);font-size:13px}
+
+/* ── FUNNY ── */
+.funny{height:24px;font-size:13px;color:rgba(240,192,64,.62);font-style:italic;margin:5px 0 15px;transition:opacity .45s}
+
+/* ── MAIN BUTTON ── */
+.btn-main{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#c8930e,#f0c040,#b8860b);color:#1a0800;border:none;border-radius:50px;padding:16px 44px;font-family:'Poppins',sans-serif;font-size:clamp(16px,2.6vw,20px);font-weight:700;cursor:pointer;letter-spacing:.4px;box-shadow:0 5px 32px rgba(240,192,64,.38);position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.btn-main::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.22),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-main:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 10px 44px rgba(240,192,64,.55)}
+.btn-main:hover::after{transform:translateX(100%)}
+.btn-main:active{transform:scale(.96)}
+.btn-main.used{opacity:.45;pointer-events:none}
+
+/* ── PAYMENT SECTION ── */
+.pay-sec{display:none;border-top:1px solid rgba(240,192,64,.13);padding-top:28px;margin-top:26px}
+.pay-sec.open{display:block;animation:slideUp .75s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes slideUp{from{opacity:0;transform:translateY(38px)}to{opacity:1;transform:translateY(0)}}
+.pay-title{font-family:'Amiri',serif;font-size:clamp(20px,4vw,30px);color:var(--gold);text-shadow:0 0 14px var(--glow);margin-bottom:6px}
+.pay-sub{font-size:12px;color:rgba(255,253,245,.42);margin-bottom:20px;letter-spacing:.5px}
+
+/* ── PAY GRID ── */
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:12px}
+.span2{grid-column:1/-1}
+.btn-pay{display:flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:13px;padding:14px 16px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;position:relative;overflow:hidden;transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .18s;-webkit-tap-highlight-color:transparent}
+.btn-pay.pressing{transform:scale(.90)!important;filter:brightness(1.2)}
+.btn-pay.glow-ring{animation:gRing .55s ease forwards}
+@keyframes gRing{0%{box-shadow:0 0 0 0 rgba(240,192,64,0)}45%{box-shadow:0 0 0 14px rgba(240,192,64,.17)}100%{box-shadow:0 0 0 0 rgba(240,192,64,0)}}
+.btn-bkash{background:linear-gradient(135deg,#e2136e,#c0055c);color:#fff;box-shadow:0 4px 20px rgba(226,19,110,.28)}
+.btn-bkash:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(226,19,110,.44)}
+.btn-bkash.glow-ring{animation:gBkash .55s ease forwards}
+@keyframes gBkash{0%{box-shadow:0 4px 20px rgba(226,19,110,.28)}45%{box-shadow:0 0 0 14px rgba(226,19,110,.2)}100%{box-shadow:0 4px 20px rgba(226,19,110,.28)}}
+.btn-nagad{background:linear-gradient(135deg,#f05a28,#dc3910);color:#fff;box-shadow:0 4px 20px rgba(240,90,40,.28)}
+.btn-nagad:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(240,90,40,.44)}
+.btn-nagad.glow-ring{animation:gNagad .55s ease forwards}
+@keyframes gNagad{0%{box-shadow:0 4px 20px rgba(240,90,40,.28)}45%{box-shadow:0 0 0 14px rgba(240,90,40,.2)}100%{box-shadow:0 4px 20px rgba(240,90,40,.28)}}
+.btn-show{background:rgba(240,192,64,.10);color:var(--gold);border:1.5px solid rgba(240,192,64,.27)}
+.btn-show:hover{background:rgba(240,192,64,.18);transform:translateY(-2px)}
+.btn-copy{background:rgba(30,132,73,.18);color:#6fcf97;border:1.5px solid rgba(111,207,151,.27)}
+.btn-copy:hover{background:rgba(30,132,73,.32);transform:translateY(-2px)}
+
+/* ── NUMBER BOX ── */
+.num-box{display:none;margin:0 0 12px;background:rgba(240,192,64,.07);border:1px solid rgba(240,192,64,.22);border-radius:12px;padding:13px 18px}
+.num-box.vis{display:block;animation:fzoom .35s ease forwards}
+@keyframes fzoom{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.num-lbl{font-size:10px;color:rgba(255,253,245,.36);text-transform:uppercase;letter-spacing:2px;margin-bottom:3px}
+.num-txt{font-size:clamp(20px,4.5vw,28px);font-weight:700;color:var(--gold);letter-spacing:2px;text-shadow:0 0 14px var(--glow)}
+
+/* ── MICROCOPY ── */
+.micro{min-height:22px;margin:3px 0 0;font-size:12.5px;font-style:italic;color:rgba(240,192,64,.6);text-align:center;opacity:0;transition:opacity .4s}
+.micro.show{opacity:1}
+
+/* ── EXTRAS ── */
+.extras{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;justify-content:center}
+.btn-sm{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:50px;padding:9px 16px;font-family:'Poppins',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .3s}
+.btn-wa{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;box-shadow:0 3px 14px rgba(37,211,102,.22)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,.38)}
+.btn-mus{background:rgba(255,253,245,.05);color:var(--gold-l);border:1.5px solid rgba(240,192,64,.17)}
+.btn-mus:hover{background:rgba(240,192,64,.09);transform:translateY(-2px)}
+
+/* ── URGENCY ── */
+.urgency{margin-top:18px;text-align:center;padding:12px 16px;background:rgba(240,192,64,.04);border:1px solid rgba(240,192,64,.09);border-radius:12px}
+.urg-lbl{font-size:12px;color:rgba(255,253,245,.42);letter-spacing:.6px;margin-bottom:3px}
+.urg-timer{font-size:clamp(17px,3vw,24px);font-weight:700;color:var(--gold);letter-spacing:3px;font-variant-numeric:tabular-nums;text-shadow:0 0 10px var(--glow)}
+.urg-sub{font-size:11px;color:rgba(240,192,64,.38);font-style:italic;margin-top:3px}
+
+/* ── FOOTER ── */
+.footer{margin-top:36px;text-align:center;font-size:12px;color:rgba(240,192,64,.34);letter-spacing:1px}
+
+/* ── VOICE WAVE ── */
+.vwave{display:none;position:fixed;bottom:88px;left:50%;transform:translateX(-50%);z-index:1001;gap:4px;align-items:flex-end;height:40px;background:rgba(6,22,12,.9);border:1px solid rgba(240,192,64,.22);border-radius:50px;padding:8px 18px;backdrop-filter:blur(14px)}
+.vwave.on{display:flex}
+.wb{width:4px;border-radius:3px;background:linear-gradient(to top,var(--gold-d),var(--gold));animation:wAnim .5s ease-in-out infinite alternate}
+.wb:nth-child(1){height:11px;animation-delay:0s}.wb:nth-child(2){height:23px;animation-delay:.08s}.wb:nth-child(3){height:32px;animation-delay:.16s}.wb:nth-child(4){height:38px;animation-delay:.24s}.wb:nth-child(5){height:28px;animation-delay:.32s}.wb:nth-child(6){height:20px;animation-delay:.40s}.wb:nth-child(7){height:13px;animation-delay:.48s}
+.wlbl{font-size:11px;color:rgba(240,192,64,.78);margin-left:9px;white-space:nowrap;align-self:center}
+@keyframes wAnim{from{transform:scaleY(.28);opacity:.45}to{transform:scaleY(1);opacity:1}}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(70px);background:linear-gradient(135deg,#145a32,#0a3d1f);border:1px solid rgba(240,192,64,.27);border-radius:50px;padding:11px 26px;color:var(--gold-l);font-size:14.5px;font-weight:600;z-index:1100;box-shadow:0 4px 24px rgba(0,0,0,.55);transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── TY POPUP ── */
+.ty-ov{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.52);backdrop-filter:blur(7px);align-items:center;justify-content:center;padding:18px}
+.ty-ov.on{display:flex}
+.ty-card{position:relative;background:linear-gradient(150deg,rgba(10,40,22,.97),rgba(5,15,10,.99));border:1px solid rgba(240,192,64,.32);border-radius:26px;padding:38px 34px 30px;max-width:340px;width:100%;text-align:center;box-shadow:0 0 65px rgba(240,192,64,.14),0 28px 80px rgba(0,0,0,.75);animation:tyPop .55s cubic-bezier(.34,1.56,.64,1) forwards;overflow:hidden}
+@keyframes tyPop{from{opacity:0;transform:translateY(52px) scale(.88)}to{opacity:1;transform:translateY(0) scale(1)}}
+#tyMini{position:absolute;inset:0;pointer-events:none;border-radius:26px}
+.ty-icons{font-size:30px;margin-bottom:10px;filter:drop-shadow(0 0 10px rgba(240,192,64,.5))}
+.ty-hrt{display:inline-block;animation:hb .6s ease-in-out infinite alternate}
+@keyframes hb{from{transform:scale(1)}to{transform:scale(1.3)}}
+.ty-title{font-family:'Scheherazade New',serif;font-size:clamp(22px,5vw,32px);font-weight:700;color:var(--gold);text-shadow:0 0 20px var(--glow);margin-bottom:9px}
+.ty-msg{font-size:clamp(13px,2.2vw,15px);color:rgba(255,253,245,.85);line-height:1.65;margin-bottom:7px}
+.ty-sub{font-size:12.5px;color:rgba(240,192,64,.58);font-style:italic;min-height:18px}
+.ty-close{margin-top:20px;background:rgba(240,192,64,.09);border:1px solid rgba(240,192,64,.22);border-radius:50px;padding:9px 26px;color:var(--gold-l);font-family:'Poppins',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .3s}
+.ty-close:hover{background:rgba(240,192,64,.2);transform:scale(1.04)}
+
+/* ── MODAL ── */
+.mod-ov{display:none;position:fixed;inset:0;z-index:2100;background:rgba(0,0,0,.62);backdrop-filter:blur(9px);align-items:center;justify-content:center;padding:18px}
+.mod-ov.on{display:flex}
+.mod-card{background:linear-gradient(150deg,rgba(10,40,22,.98),rgba(5,15,10,1));border:1px solid rgba(240,192,64,.28);border-radius:24px;padding:34px 30px 26px;max-width:320px;width:100%;text-align:center;box-shadow:0 0 45px rgba(240,192,64,.1),0 20px 60px rgba(0,0,0,.7);animation:tyPop .42s cubic-bezier(.34,1.56,.64,1) forwards}
+.mod-icon{font-size:34px;margin-bottom:9px}
+.mod-title{font-family:'Scheherazade New',serif;font-size:26px;color:var(--gold);text-shadow:0 0 14px var(--glow);margin-bottom:7px}
+.mod-body{font-size:13px;color:rgba(255,253,245,.62);margin-bottom:13px}
+.mod-num{font-size:clamp(22px,5vw,29px);font-weight:700;color:var(--gold);letter-spacing:2px;text-shadow:0 0 12px var(--glow);margin-bottom:22px}
+.mod-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.mbtn{border:none;border-radius:50px;padding:11px 22px;font-family:'Poppins',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .3s}
+.mbtn-cp{background:linear-gradient(135deg,var(--gold-d),var(--gold));color:#1a0800;box-shadow:0 3px 14px rgba(240,192,64,.3)}
+.mbtn-cp:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,192,64,.45)}
+.mbtn-cl{background:rgba(255,255,255,.05);color:rgba(255,253,245,.52);border:1px solid rgba(255,255,255,.1)}
+.mbtn-cl:hover{background:rgba(255,255,255,.1)}
+
+/* ── NUMBER POPUP ── */
+.num-ov{display:none;position:fixed;inset:0;z-index:2200;background:rgba(0,0,0,.58);backdrop-filter:blur(9px);align-items:center;justify-content:center;padding:18px}
+.num-ov.on{display:flex}
+.num-card{background:linear-gradient(150deg,rgba(10,42,22,.97),rgba(5,16,10,.99));border:1px solid rgba(240,192,64,.32);border-radius:24px;padding:34px 30px 26px;max-width:320px;width:100%;text-align:center;box-shadow:0 0 55px rgba(240,192,64,.15),0 22px 65px rgba(0,0,0,.72);animation:tyPop .45s cubic-bezier(.34,1.56,.64,1) forwards}
+.num-card .nc-icon{font-size:36px;margin-bottom:10px}
+.num-card .nc-title{font-family:'Amiri',serif;font-size:24px;color:var(--gold);text-shadow:0 0 14px var(--glow);margin-bottom:8px}
+.num-card .nc-lbl{font-size:11px;color:rgba(255,253,245,.4);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px}
+.num-card .nc-num{font-size:clamp(22px,6vw,32px);font-weight:700;color:var(--gold);letter-spacing:2.5px;text-shadow:0 0 16px var(--glow);margin-bottom:24px}
+.num-card .nc-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+@media(max-width:460px){
+  .pay-grid{grid-template-columns:1fr}
+  .span2,.pay-grid .btn-pay{grid-column:1}
+  .lantern:nth-child(4),.lantern:nth-child(5){display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-base"></div>
+<div class="mosque"></div>
+<canvas id="starCanvas"></canvas>
+<canvas id="confettiCanvas"></canvas>
+<div class="glow-burst" id="glowBurst"></div>
+<div class="float-layer" id="floatLayer"></div>
+
+<!-- LANTERNS -->
+<div class="lanterns">
+  <div class="lantern"><div class="ls"></div><div class="lb" style="background:radial-gradient(ellipse at 30% 30%,#ff6b35,#c0392b);box-shadow:0 0 14px 5px rgba(255,100,50,.36)"></div><div class="lg"></div></div>
+  <div class="lantern"><div class="ls"></div><div class="lb" style="background:radial-gradient(ellipse at 30% 30%,#f39c12,#e67e22);box-shadow:0 0 14px 5px rgba(243,156,18,.36)"></div><div class="lg"></div></div>
+  <div class="lantern"><div class="ls"></div><div class="lb" style="background:radial-gradient(ellipse at 30% 30%,#9b59b6,#6c3483);box-shadow:0 0 14px 5px rgba(155,89,182,.36)"></div><div class="lg"></div></div>
+  <div class="lantern"><div class="ls"></div><div class="lb" style="background:radial-gradient(ellipse at 30% 30%,#1abc9c,#16a085);box-shadow:0 0 14px 5px rgba(26,188,156,.36)"></div><div class="lg"></div></div>
+  <div class="lantern"><div class="ls"></div><div class="lb" style="background:radial-gradient(ellipse at 30% 30%,#3498db,#2980b9);box-shadow:0 0 14px 5px rgba(52,152,219,.36)"></div><div class="lg"></div></div>
+</div>
+
+<!-- VOICE WAVE -->
+<div class="vwave" id="vwave">
+  <div class="wb"></div><div class="wb"></div><div class="wb"></div>
+  <div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div>
+  <span class="wlbl" id="wlbl">🌙 Eid Mubarak</span>
+</div>
+
+<!-- THANK-YOU POPUP -->
+<div class="ty-ov" id="tyOv" onclick="closeTY()">
+  <div class="ty-card" onclick="event.stopPropagation()">
+    <canvas id="tyMini"></canvas>
+    <div class="ty-icons">🌙 <span class="ty-hrt">💖</span> 🏮</div>
+    <div class="ty-title" id="tyTitle">JazakAllah Khair!</div>
+    <div class="ty-msg" id="tyMsg">Thank you for your Salami! 💖</div>
+    <div class="ty-sub" id="tySub">May your Eid be full of joy and blessings 🌙</div>
+    <button class="ty-close" onclick="closeTY()">✕ Close</button>
+  </div>
+</div>
+
+<!-- FALLBACK MODAL -->
+<div class="mod-ov" id="modOv" onclick="closeMod()">
+  <div class="mod-card" onclick="event.stopPropagation()">
+    <div class="mod-icon">💖</div>
+    <div class="mod-title">Almost there!</div>
+    <div class="mod-body">Send your Salami to this number:</div>
+    <div class="mod-num">+880 151 566 722</div>
+    <div class="mod-btns">
+      <button class="mbtn mbtn-cp" onclick="modCopy()">📋 Copy Number</button>
+      <button class="mbtn mbtn-cl" onclick="closeMod()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHOW NUMBER POPUP -->
+<div class="num-ov" id="numOv" onclick="closeNum()">
+  <div class="num-card" onclick="event.stopPropagation()">
+    <div class="nc-icon">📱</div>
+    <div class="nc-title">bKash &amp; Nagad Number</div>
+    <div class="nc-lbl">Send your Salami to</div>
+    <div class="nc-num">+880 151 566 722</div>
+    <div class="nc-btns">
+      <button class="mbtn mbtn-cp" onclick="numPopCopy()">📋 Copy Number</button>
+      <button class="mbtn mbtn-cl" onclick="closeNum()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══ APP ══ -->
+<div id="app">
+
+  <div class="moon-wrap">
+    <div class="mring r1"></div>
+    <div class="mring r2"></div>
+    <span class="moon-em">🌙</span>
+  </div>
+
+  <div class="card" id="mainCard">
+
+    <div class="eid-title">Eid Mubarak</div>
+    <div class="eid-ar">عيد مبارك ✨</div>
+
+    <div class="name-wrap">
+      <input class="name-in" id="nameIn" type="text" placeholder="✨ Enter your name…" maxlength="30" autocomplete="off">
+    </div>
+
+    <div class="greeting" id="greeting">
+      Eid Mubarak! Your love is my biggest gift… but a little Salami would make it even sweeter 😉
+    </div>
+
+    <!-- Counter above button -->
+    <div class="ctr">💰 Already received: <strong id="ctrVal">0</strong> BDT</div>
+
+    <div class="funny" id="funnyEl"></div>
+
+    <button class="btn-main" id="btnMain" onclick="onMain()">
+      <span>💖</span> Give Salami
+    </button>
+
+    <!-- PAYMENT SECTION -->
+    <div class="pay-sec" id="paySec">
+
+      <div class="pay-title">Send Your Salami 💖</div>
+      <div class="pay-sub">bKash &amp; Nagad — Pick your method</div>
+
+      <div class="pay-grid">
+        <button class="btn-pay btn-bkash span2" id="btnBkash"
+          onclick="handlePay(this,'bkash://payment?number=%2B880151566722','bKash')">
+          💗 Give Salami via bKash
+        </button>
+        <button class="btn-pay btn-nagad span2" id="btnNagad"
+          onclick="handlePay(this,'nagad://payment?number=%2B880151566722','Nagad')">
+          💰 Give Salami via Nagad
+        </button>
+        <button class="btn-pay btn-show" onclick="openNum()">📱 Show Number</button>
+        <button class="btn-pay btn-copy" onclick="doCopy('+880151566722',true)">📋 Copy Number</button>
+      </div>
+
+      <div class="micro" id="micro"></div>
+
+      <div class="extras">
+        <button class="btn-sm btn-wa" onclick="shareWA()">💬 Share on WhatsApp</button>
+        <button class="btn-sm btn-mus" id="musicBtn" onclick="toggleMusic()">🎵 Music: OFF</button>
+      </div>
+
+      <div class="urgency">
+        <div class="urg-lbl">Salami window closing in 😄⏳</div>
+        <div class="urg-timer" id="urgTimer">00:00:00</div>
+        <div class="urg-sub">Don't be late! 😏</div>
+      </div>
+
+    </div><!-- /pay-sec -->
+
+  </div><!-- /card -->
+
+  <div class="footer">Made with ❤️ by Ashadul Islam 💖</div>
+
+</div><!-- /app -->
+
+<script>
+/* ══════════════════════════════════════════════
+   EID SALAMI CARD  ·  JS
+══════════════════════════════════════════════ */
+
+const NUM='+880151566722';
+
+/* ── STARS ── */
+(()=>{
+  const cv=document.getElementById('starCanvas'),cx=cv.getContext('2d');let s=[];
+  const rs=()=>{cv.width=innerWidth;cv.height=innerHeight;s=[];for(let i=0;i<200;i++)s.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:Math.random()*1.7+.2,tw:Math.random()*Math.PI*2})};
+  const d=()=>{cx.clearRect(0,0,cv.width,cv.height);s.forEach(p=>{p.tw+=.018;const o=.25+.75*Math.abs(Math.sin(p.tw));cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=`rgba(240,218,96,${o})`;cx.shadowBlur=7;cx.shadowColor='#f0c040';cx.fill();cx.shadowBlur=0});requestAnimationFrame(d)};
+  addEventListener('resize',rs);rs();d();
+})();
+
+/* ── FLOATING WORDS ── */
+(()=>{
+  const W=['Barakah','Peace','Eid Mubarak','بركة','سلام','عيد','Joy','Blessings','Ameen','Rahmat'];
+  const c=document.getElementById('floatLayer');
+  setInterval(()=>{
+    const el=document.createElement('div');el.className='fw';
+    el.textContent=W[Math.floor(Math.random()*W.length)];
+    const dur=11+Math.random()*10;
+    el.style.cssText=`left:${Math.random()*93}%;bottom:-28px;font-size:${11+Math.random()*13}px;animation-duration:${dur}s`;
+    c.appendChild(el);setTimeout(()=>el.remove(),dur*1000);
+  },2400);
+})();
+
+/* ── COUNTER ── */
+(()=>{
+  const t=880+Math.floor(Math.random()*750),el=document.getElementById('ctrVal');let c=0;
+  const tick=()=>{if(c<t){c=Math.min(c+Math.ceil((t-c)*.09)+4,t);el.textContent=c.toLocaleString();requestAnimationFrame(tick)}};
+  setTimeout(tick,700);
+})();
+
+/* ── GREETING ── */
+const nameIn=document.getElementById('nameIn');
+nameIn.addEventListener('input',()=>{
+  const n=nameIn.value.trim(),el=document.getElementById('greeting');
+  el.innerHTML=n?`Eid Mubarak, <span class="hi">${esc(n)}</span>! Your love is my biggest gift… but a little Salami would make it sweeter 😉`:`Eid Mubarak! Your love is my biggest gift… but a little Salami would make it even sweeter 😉`;
+});
+function esc(t){return t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+/* ── FUNNY MESSAGES ── */
+const FUNNY=["Don't be shy 😌","Even 50 taka is accepted 😉","Big heart = big Salami 💸","Spread the Eid love! 🌙","It's sunnah to give Salami 😄","Your Salami = infinite blessings ✨","The angels are watching 👼💸"];
+let fi=0;
+const cf=()=>{const el=document.getElementById('funnyEl');el.style.opacity='0';setTimeout(()=>{el.textContent=FUNNY[fi%FUNNY.length];el.style.opacity='1';fi++;},300)};
+setInterval(cf,3600);cf();
+
+/* ── CONFETTI ── */
+(()=>{
+  const cv=document.getElementById('confettiCanvas'),cx=cv.getContext('2d');
+  cv.width=innerWidth;cv.height=innerHeight;
+  addEventListener('resize',()=>{cv.width=innerWidth;cv.height=innerHeight});
+  const C=['#f0c040','#e74c3c','#2ecc71','#3498db','#9b59b6','#f39c12','#1abc9c','#ff6b6b','#ffe082'];
+  let ps=[];
+  window.launchConfetti=(ox,oy,n=200)=>{
+    ox=ox??cv.width/2;oy=oy??-10;
+    for(let i=0;i<n;i++)ps.push({x:ox,y:oy,w:5+Math.random()*8,h:3+Math.random()*4,color:C[Math.floor(Math.random()*C.length)],rot:Math.random()*360,vx:(Math.random()-.5)*7,vy:oy>0?(-3-Math.random()*5):(2+Math.random()*5),vr:(Math.random()-.5)*9,alpha:1});
+  };
+  const draw=()=>{
+    cx.clearRect(0,0,cv.width,cv.height);
+    ps=ps.filter(p=>p.alpha>.01);
+    ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.13;p.vx*=.993;p.rot+=p.vr;p.alpha-=.008;cx.save();cx.globalAlpha=p.alpha;cx.translate(p.x,p.y);cx.rotate(p.rot*Math.PI/180);cx.fillStyle=p.color;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});
+    requestAnimationFrame(draw);
+  };
+  draw();
+})();
+
+/* ══════════════════════════════════════════════
+   AUDIO ENGINE
+══════════════════════════════════════════════ */
+let actx=null,musicMaster=null,musicOn=false,musicNodes=[];
+
+function getACtx(){
+  if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();
+  if(actx.state==='suspended')actx.resume();
+  return actx;
+}
+
+/* Bell chime: D5 → A4 with natural harmonics */
+function makeBell(ctx){
+  const sr=ctx.sampleRate,dur=2.5,buf=ctx.createBuffer(2,Math.ceil(sr*dur),sr);
+  const parts=[
+    {f:587.33,a:.28,dc:1.8,st:0},{f:880,a:.10,dc:1.0,st:0},
+    {f:440,a:.20,dc:1.55,st:.42},{f:659.25,a:.09,dc:.9,st:.42},
+    {f:293.66,a:.07,dc:2.2,st:0},{f:349.23,a:.06,dc:1.6,st:.85},
+  ];
+  for(let ch=0;ch<2;ch++){
+    const d=buf.getChannelData(ch);
+    parts.forEach(({f,a,dc,st})=>{
+      const s0=Math.floor(st*sr);
+      for(let i=s0;i<d.length;i++){const t=(i-s0)/sr;d[i]+=a*Math.exp(-t/dc)*(Math.sin(2*Math.PI*f*t)+.12*Math.sin(2*Math.PI*f*2*t)+.04*Math.sin(2*Math.PI*f*3*t));}
+    });
+    let pk=0;for(let i=0;i<d.length;i++)pk=Math.max(pk,Math.abs(d[i]));
+    if(pk>.88)for(let i=0;i<d.length;i++)d[i]*=.88/pk;
+  }
+  return buf;
+}
+
+/* Coin ping */
+function playCoin(){
+  try{
+    const ctx=getACtx(),now=ctx.currentTime;
+    [{f:1820,d:.34,dl:0},{f:2180,d:.28,dl:.11},{f:1600,d:.38,dl:.23}].forEach(p=>{
+      const t=now+p.dl;
+      [0,2.2].forEach(dt=>{
+        const o=ctx.createOscillator(),g=ctx.createGain(),hp=ctx.createBiquadFilter();
+        o.type=dt?'sine':'triangle';o.frequency.value=p.f+dt;
+        hp.type='highpass';hp.frequency.value=1100;
+        g.gain.setValueAtTime(.11,t);g.gain.exponentialRampToValueAtTime(.0001,t+p.d);
+        o.connect(hp);hp.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+p.d+.04);
+      });
+    });
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(155,now);o.frequency.exponentialRampToValueAtTime(58,now+.14);
+    g.gain.setValueAtTime(.06,now);g.gain.exponentialRampToValueAtTime(.0001,now+.17);
+    o.connect(g);g.connect(ctx.destination);o.start(now);o.stop(now+.2);
+  }catch(e){}
+}
+
+/* Voice selector */
+function bestVoice(){
+  if(!window.speechSynthesis)return null;
+  const vs=window.speechSynthesis.getVoices();if(!vs.length)return null;
+  const BEST={'google uk english female':1,'microsoft hazel':2,'microsoft susan':3,'samantha':4,'microsoft zira':5,'karen':6,'moira':7,'tessa':8,'fiona':9,'daniel':10,'google us english':12};
+  const score=v=>{const n=v.name.toLowerCase(),l=v.lang.toLowerCase();for(const[k,s]of Object.entries(BEST))if(n.includes(k))return s;let sc=100;if(['microsoft david','microsoft mark','espeak','compact'].some(b=>n.includes(b)))sc+=60;if(l.startsWith('en-gb'))sc-=25;else if(l.startsWith('en-in'))sc-=20;else if(l.startsWith('en-au'))sc-=18;else if(l.startsWith('en-us'))sc-=10;else if(l.startsWith('en'))sc-=5;if(v.localService)sc-=8;return sc};
+  const en=vs.filter(v=>v.lang.toLowerCase().startsWith('en'));
+  return(en.length?en:vs).sort((a,b)=>score(a)-score(b))[0];
+}
+
+/* ─────────────────────────────────────────────────────
+   GREETING — single TTS sentence, no splitting
+   "Eid Mubarak!"  OR  "Eid Mubarak, [Name]!"
+───────────────────────────────────────────────────── */
+function playGreeting(){
+  const name = nameIn.value.trim();
+  const textToSpeak = name ? `Eid Mubarak, ${name}!` : 'Eid Mubarak!';
+
+  /* update wave label */
+  document.getElementById('wlbl').textContent = `🌙 ${textToSpeak}`;
+  document.getElementById('vwave').classList.add('on');
+
+  /* duck music */
+  if(musicOn && musicMaster) try{ musicMaster.gain.setTargetAtTime(.022, actx.currentTime, .1); }catch(e){}
+
+  const done = () => {
+    setTimeout(() => {
+      document.getElementById('vwave').classList.remove('on');
+      if(musicOn && musicMaster) try{ musicMaster.gain.setTargetAtTime(.10, actx.currentTime, .35); }catch(e){}
+    }, 400);
+  };
+
+  /* ── Play bell chime alongside TTS ── */
+  try{
+    const ctx = getACtx(), src = ctx.createBufferSource(), gn = ctx.createGain();
+    gn.gain.value = .60;
+    src.buffer = makeBell(ctx);
+    src.connect(gn); gn.connect(ctx.destination);
+    src.start(ctx.currentTime + .04);
+  }catch(e){}
+
+  /* ── Single TTS sentence spoken after 300ms delay ── */
+  if(!window.speechSynthesis){ done(); return; }
+
+  window.speechSynthesis.cancel();
+
+  const msg = new SpeechSynthesisUtterance(textToSpeak);
+  msg.lang   = 'en-GB';   /* softer, clearer than en-US */
+  msg.rate   = 0.85;
+  msg.pitch  = 1;
+  msg.volume = 1;
+
+  /* Try to pick a pleasant voice if available */
+  const applyVoice = () => {
+    const voices = window.speechSynthesis.getVoices();
+    if(voices.length){
+      const preferred = [
+        'google uk english female', 'microsoft hazel', 'samantha',
+        'microsoft zira', 'karen', 'moira', 'tessa', 'fiona',
+        'google uk english male', 'daniel', 'google us english',
+      ];
+      const all = voices.filter(v => v.lang.toLowerCase().startsWith('en'));
+      for(const name of preferred){
+        const v = all.find(v => v.name.toLowerCase().includes(name));
+        if(v){ msg.voice = v; msg.lang = v.lang; break; }
+      }
+    }
+  };
+
+  msg.onend   = done;
+  msg.onerror = done;
+
+  const speakNow = () => {
+    applyVoice();
+    if(window.speechSynthesis.paused) window.speechSynthesis.resume();
+    window.speechSynthesis.speak(msg);
+  };
+
+  /* 300ms delay so it feels deliberate, not instant */
+  setTimeout(() => {
+    const voices = window.speechSynthesis.getVoices();
+    if(voices.length){
+      speakNow();
+    } else {
+      /* wait for voices to load once, then speak */
+      const h = () => {
+        window.speechSynthesis.removeEventListener('voiceschanged', h);
+        speakNow();
+      };
+      window.speechSynthesis.addEventListener('voiceschanged', h);
+      setTimeout(speakNow, 600); /* safety fallback */
+    }
+  }, 300);
+}
+
+/* speakName kept for compatibility but no longer called */
+function speakName(name, done){ done && done(); }
+
+/* Music */
+function toggleMusic(){
+  const btn=document.getElementById('musicBtn');
+  if(!musicOn){startMusic();musicOn=true;btn.textContent='🎵 Music: ON';}
+  else{stopMusic();musicOn=false;btn.textContent='🎵 Music: OFF';}
+}
+function startMusic(){
+  const ctx=getACtx(),notes=[261.63,293.66,329.63,392,440,392,349.23,329.63,293.66,261.63];
+  let t=ctx.currentTime+.1;
+  const mg=ctx.createGain();mg.gain.value=.10;mg.connect(ctx.destination);
+  musicMaster=mg;musicNodes.push(mg);
+  const sched=()=>{notes.forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(mg);g.gain.setValueAtTime(0,t+i*.5);g.gain.linearRampToValueAtTime(.65,t+i*.5+.08);g.gain.linearRampToValueAtTime(0,t+i*.5+.44);o.start(t+i*.5);o.stop(t+i*.5+.5);musicNodes.push(o,g);})};
+  sched();
+  const id=setInterval(()=>{if(!musicOn){clearInterval(id);return;}t=ctx.currentTime+.04;sched();},notes.length*.5*1000);
+  musicNodes.push({stop:()=>clearInterval(id)});
+}
+function stopMusic(){musicNodes.forEach(n=>{try{n.stop&&n.stop();}catch(e){}});musicNodes=[];musicMaster=null;}
+
+/* ══════════════════════════════════════════════
+   MAIN CLICK
+══════════════════════════════════════════════ */
+let revealed=false;
+function onMain(){
+  if(revealed)return;
+  const card=document.getElementById('mainCard');
+  card.classList.add('shake');setTimeout(()=>card.classList.remove('shake'),540);
+  const gb=document.getElementById('glowBurst');gb.classList.add('flash');setTimeout(()=>gb.classList.remove('flash'),720);
+  setTimeout(playGreeting,300);
+  setTimeout(()=>window.launchConfetti(),220);
+  setTimeout(playCoin,380);
+  setTimeout(()=>window.launchConfetti(),1050);
+  setTimeout(()=>{
+    document.getElementById('paySec').classList.add('open');
+    document.getElementById('btnMain').classList.add('used');
+    revealed=true;
+    showToast('🎉 Eid Mubarak! Send your Salami!');
+  },480);
+}
+
+/* ══════════════════════════════════════════════
+   PAYMENT
+══════════════════════════════════════════════ */
+const TY=[
+  {t:'JazakAllah Khair! 💖',s:'Allah sees your generosity 😌'},
+  {t:'Legend move! 💸🔥',s:'Big heart = big Salami 💸'},
+  {t:"You're amazing! 🌙✨",s:'May Allah bless you abundantly 🌟'},
+  {t:'Eid just got better! 🎉',s:'Your kindness means the world 🌙'},
+  {t:'Shukria so much! 💖',s:'Barakah incoming! ✨'},
+];
+const MICRO=["May your Eid be full of joy 🌙💖","Allah sees your generosity 😌","Big heart = big Salami 💸","Legend move 💸🔥","Barakah on its way! ✨"];
+let tyTimer=null;
+
+function handlePay(btn,scheme,app){
+  // Press animation
+  btn.classList.add('pressing');
+  setTimeout(()=>{btn.classList.remove('pressing');btn.classList.add('glow-ring');setTimeout(()=>btn.classList.remove('glow-ring'),580);},140);
+  // Loading text
+  const orig=btn.innerHTML;
+  btn.innerHTML=`⏳ Opening ${app}…`;btn.style.pointerEvents='none';
+  setTimeout(()=>{btn.innerHTML=orig;btn.style.pointerEvents='';},3000);
+  // Sounds + confetti
+  setTimeout(playCoin,90);
+  const r=btn.getBoundingClientRect();
+  setTimeout(()=>window.launchConfetti(r.left+r.width/2,r.top+r.height/2,80),160);
+  // TY popup
+  setTimeout(()=>openTY(app),450);
+  // Deep-link attempt
+  const ifr=document.createElement('iframe');ifr.style.display='none';document.body.appendChild(ifr);
+  setTimeout(()=>{
+    try{ifr.src=scheme;}catch(e){}
+    setTimeout(()=>{
+      document.body.removeChild(ifr);
+      if(!document.hidden)setTimeout(()=>{if(!document.getElementById('tyOv').classList.contains('on'))openMod();},400);
+    },2600);
+  },280);
+  // Microcopy
+  setTimeout(()=>{const el=document.getElementById('micro');el.textContent=MICRO[Math.floor(Math.random()*MICRO.length)];el.classList.add('show');setTimeout(()=>el.classList.remove('show'),4000);},900);
+}
+
+/* TY POPUP */
+function openTY(app){
+  const m=TY[Math.floor(Math.random()*TY.length)];
+  document.getElementById('tyTitle').textContent=m.t;
+  document.getElementById('tyMsg').textContent=app?`Thank you for your Salami via ${app}! 💖`:'Thank you for your Salami! 💖';
+  document.getElementById('tySub').textContent=m.s;
+  document.getElementById('tyOv').classList.add('on');
+  miniConf();
+  clearTimeout(tyTimer);tyTimer=setTimeout(closeTY,4300);
+}
+function closeTY(){
+  clearTimeout(tyTimer);
+  const ov=document.getElementById('tyOv');
+  ov.style.transition='opacity .38s';ov.style.opacity='0';
+  setTimeout(()=>{ov.classList.remove('on');ov.style.opacity='';ov.style.transition='';},380);
+}
+function miniConf(){
+  const cv=document.getElementById('tyMini');if(!cv)return;
+  cv.width=cv.offsetWidth||340;cv.height=cv.offsetHeight||280;
+  const cx=cv.getContext('2d');
+  const C=['#f0c040','#e74c3c','#2ecc71','#3498db','#9b59b6','#ff6b6b','#ffe082'];
+  let ps=[];
+  for(let i=0;i<55;i++)ps.push({x:cv.width*.5+(Math.random()-.5)*cv.width*.6,y:cv.height*.4,w:4+Math.random()*6,h:3+Math.random()*3,color:C[Math.floor(Math.random()*C.length)],rot:Math.random()*360,vx:(Math.random()-.5)*5,vy:-3.5-Math.random()*4,vr:(Math.random()-.5)*10,alpha:1});
+  const draw=()=>{cx.clearRect(0,0,cv.width,cv.height);ps=ps.filter(p=>p.alpha>.02);if(!ps.length)return;ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.16;p.rot+=p.vr;p.alpha-=.02;cx.save();cx.globalAlpha=p.alpha;cx.translate(p.x,p.y);cx.rotate(p.rot*Math.PI/180);cx.fillStyle=p.color;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});requestAnimationFrame(draw);};
+  draw();
+}
+
+/* MODAL */
+function openMod(){document.getElementById('modOv').classList.add('on');}
+function closeMod(){const ov=document.getElementById('modOv');ov.style.transition='opacity .3s';ov.style.opacity='0';setTimeout(()=>{ov.classList.remove('on');ov.style.opacity='';ov.style.transition='';},300);}
+function modCopy(){doCopy(NUM,true);closeMod();}
+
+/* SHOW NUMBER POPUP */
+function openNum(){
+  document.getElementById('numOv').classList.add('on');
+}
+function closeNum(){
+  const ov=document.getElementById('numOv');
+  ov.style.transition='opacity .32s';ov.style.opacity='0';
+  setTimeout(()=>{ov.classList.remove('on');ov.style.opacity='';ov.style.transition='';},330);
+}
+function numPopCopy(){ doCopy(NUM,true); closeNum(); }
+function doCopy(txt,toast){
+  const cb=()=>{if(toast)showToast('Number copied! 🎉');};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(cb).catch(()=>fbCopy(txt,cb));
+  else fbCopy(txt,cb);
+}
+function fbCopy(t,cb){const el=document.createElement('textarea');el.value=t;document.body.appendChild(el);el.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(el);}
+
+/* WHATSAPP */
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent('Eid Mubarak! 🌙✨ Send me Salami 😄💸 '+NUM),'_blank');}
+
+/* TOAST */
+let toastT;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2800);}
+
+/* URGENCY COUNTDOWN */
+(()=>{
+  const el=document.getElementById('urgTimer');
+  const tick=()=>{const now=new Date(),end=new Date();end.setHours(23,59,59,999);const d=end-now;el.textContent=`${String(Math.floor(d/3600000)).padStart(2,'0')}:${String(Math.floor((d%3600000)/60000)).padStart(2,'0')}:${String(Math.floor((d%60000)/1000)).padStart(2,'0')}`};
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
